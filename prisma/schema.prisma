@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  password   String
+  firstName  String
+  lastName   String
+  wallet     Wallet?
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model Wallet {
+  id                 String              @id @default(uuid())
+  balance            Float               @default(0)
+  user_id            String              @unique
+  user               User                @relation(fields: [user_id], references: [id])
+  debitTransactions  WalletTransaction[] @relation("debit_wallet")
+  creditTransactions WalletTransaction[] @relation("credit_wallet")
+  created_at         DateTime            @default(now())
+  updated_at         DateTime            @default(now())
+}
+
+enum WalletTransactionStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+enum WalletTransactionType {
+  WalletFunding
+  WalletToWallet
+}
+
+model WalletTransaction {
+  id                         String                  @id @default(uuid())
+  amount                     Int
+  narration                  String
+  type                       WalletTransactionType
+  status                     WalletTransactionStatus
+  prev_credit_wallet_balance Int?
+  new_credit_wallet_balance  Int?
+  prev_debit_wallet_balance  Int?
+  new_debit_wallet_balance   Int?
+  debit_wallet_id            String                  @unique
+  credit_wallet_id           String                  @unique
+  debit_wallet               Wallet?                 @relation("debit_wallet", fields: [debit_wallet_id], references: [id])
+  credit_wallet              Wallet?                 @relation("credit_wallet", fields: [credit_wallet_id], references: [id])
+  created_at                 DateTime                @default(now())
+  updated_at                 DateTime                @default(now())
+}
