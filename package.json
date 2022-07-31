@@ -5,6 +5,11 @@
   "main": "./dist/app.js",
   "author": "shonubioladipo@gmail.com",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --rs --exit-child --respawn  ./src/app.ts",
+    "debug": "export DEBUG=* && yarn run dev"
+  },
   "dependencies": {
     "@prisma/client": "^4.1.1",
     "body-parser": "^1.20.0",
