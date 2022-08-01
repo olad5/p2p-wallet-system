@@ -15,6 +15,7 @@ model User {
   firstName  String
   lastName   String
   wallet     Wallet?
+  permissionFlags Int 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 }
