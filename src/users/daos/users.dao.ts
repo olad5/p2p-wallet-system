@@ -36,7 +36,12 @@ class UsersDaos {
       },
     });
 
-    return user;
+    if (user) {
+      const { password, ...userWithoutPassword } = user;
+      return userWithoutPassword;
+    } else {
+      return null;
+    }
   }
 
   async getUsers(limit: number) {
@@ -51,6 +56,21 @@ class UsersDaos {
     const user = await this.prismaClient.user.findUnique({
       where: {
         email: userEmail,
+      },
+    });
+    return user;
+  }
+
+  async getUserByEmailWithPassword(userEmail: string) {
+    const user = await this.prismaClient.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+      select: {
+        email: true,
+        id: true,
+        password: true,
+        permissionFlags: true,
       },
     });
     return user;

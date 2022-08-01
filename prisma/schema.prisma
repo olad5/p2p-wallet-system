@@ -9,15 +9,15 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  email      String   @unique
-  password   String
-  firstName  String
-  lastName   String
-  wallet     Wallet?
-  permissionFlags Int 
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  id              String   @id @default(uuid())
+  email           String   @unique
+  password        String
+  firstName       String
+  lastName        String
+  wallet          Wallet?
+  permissionFlags Int @default(1)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @default(now())
 }
 
 model Wallet {

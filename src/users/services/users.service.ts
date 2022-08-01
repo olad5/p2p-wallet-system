@@ -34,6 +34,10 @@ class UserService implements CRUD<UserModel, CreateUserDto, PatchUserDto> {
     const user = await UsersDao.getUserByEmail(email);
     return user;
   }
+  async getUserByEmailWithPassword(email: string) {
+    const user = UsersDao.getUserByEmailWithPassword(email);
+    return user;
+  }
 }
 
 export default new UserService();
