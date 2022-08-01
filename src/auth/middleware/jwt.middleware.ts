@@ -46,7 +46,9 @@ class JwtMiddleware {
       try {
         const authorization = req.headers["authorization"].split(" ");
         if (authorization[0] !== "Bearer") {
-          return res.status(401).send();
+          return res.status(401).send({
+            error: "JWT error",
+          });
         } else {
           res.locals.jwt = jwt.verify(authorization[1], jwtSecret) as Jwt;
           next();
