@@ -2,6 +2,7 @@ import { CreateUserDto } from "../dtos/create.user.dto";
 import { PatchUserDto } from "../dtos/patch.user.dto";
 import PrismaService from "../../common/services/prisma.service";
 import debug from "debug";
+import { PermissionFlag } from "../../common/middleware/common.permissionFlag.enum";
 
 const log = debug("app:UsersDaos");
 
@@ -19,6 +20,7 @@ class UsersDaos {
         password: userFields.password,
         firstName: userFields.firstName,
         lastName: userFields.lastName,
+        permissionFlags: PermissionFlag.USER,
       },
     });
     await this.prismaClient.wallet.create({
