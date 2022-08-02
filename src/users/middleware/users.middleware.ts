@@ -7,7 +7,7 @@ class UsersMiddleware {
     res: Response,
     next: NextFunction
   ) {
-    const user = await UsersService.getUserByEmail(req.body.emial);
+    const user = await UsersService.getUserByEmail(req.body.email);
     if (user) {
       res
         .status(400)
@@ -61,12 +61,10 @@ class UsersMiddleware {
       res.locals.user = user;
       next();
     } else {
-      res
-        .status(404)
-        .send({
-          status: "failed",
-          errors: [`User ${req.params.userId} not found`],
-        });
+      res.status(404).send({
+        status: "failed",
+        errors: [`User ${req.params.userId} not found`],
+      });
     }
   }
 
