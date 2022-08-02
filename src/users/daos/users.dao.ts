@@ -23,6 +23,7 @@ class UsersDaos {
         permissionFlags: PermissionFlag.USER,
       },
     });
+
     await this.prismaClient.wallet.create({
       data: {
         user_id: newUser.id,
@@ -87,7 +88,8 @@ class UsersDaos {
         ...userFields,
       },
     });
-    return existingUser;
+    const { password, ...userWithoutPassword } = existingUser;
+    return userWithoutPassword;
   }
 
   async removeUserById(userId: string) {
@@ -101,6 +103,7 @@ class UsersDaos {
         lastName: true,
       },
     });
+
     return deletedUser;
   }
 }
