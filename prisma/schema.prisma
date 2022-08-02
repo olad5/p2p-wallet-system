@@ -15,7 +15,7 @@ model User {
   firstName       String
   lastName        String
   wallet          Wallet?
-  permissionFlags Int @default(1)
+  permissionFlags Int      @default(1)
   created_at      DateTime @default(now())
   updated_at      DateTime @default(now())
 }
@@ -23,8 +23,8 @@ model User {
 model Wallet {
   id                 String              @id @default(uuid())
   balance            Float               @default(0)
-  user_id            String              @unique
-  user               User                @relation(fields: [user_id], references: [id])
+  user_id            String?             @unique
+  user               User?               @relation(fields: [user_id], references: [id], onDelete: SetNull)
   debitTransactions  WalletTransaction[] @relation("debit_wallet")
   creditTransactions WalletTransaction[] @relation("credit_wallet")
   created_at         DateTime            @default(now())
