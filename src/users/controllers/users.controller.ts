@@ -10,7 +10,6 @@ class UserController {
       staus: "success",
       message: "Users Retreived",
       users,
-      count: users.length,
     });
   }
 
@@ -36,19 +35,17 @@ class UserController {
       req.body.password = await argon2.hash(req.body.password);
     }
 
-    await UsersService.patchById(req.body.id, req.body);
-    return res.status(204).send({
+    const updatedUser = await UsersService.patchById(req.body.id, req.body);
+    return res.status(200).send({
       staus: "success",
       message: "User Account Updated ",
+      user: updatedUser,
     });
   }
 
   async removeUser(req: Request, res: Response) {
     await UsersService.deleteById(req.body.id);
-    return res.status(204).send({
-      staus: "success",
-      message: "User Account Deleted ",
-    });
+    return res.status(204).send();
   }
 }
 
