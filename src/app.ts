@@ -7,6 +7,10 @@ if (dotenvResult.error) {
 
 import express from "express";
 import bodyParser from "body-parser";
+import rateLimiter from "express-rate-limit";
+import helmet from "helmet";
+import compression from "compression";
+
 import * as http from "http";
 import * as winston from "winston";
 import * as expressWinston from "express-winston";
@@ -23,9 +27,18 @@ const routes: CommonRoutesConfig[] = [];
 const port = process.env.PORT || 5200;
 const debugLog = debug("app");
 
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 60,
+  })
+);
+
 app.use(bodyParser.json({ limit: "31mb" }));
 app.use(bodyParser.urlencoded({ limit: "31mb", extended: true }));
+app.use(helmet());
 app.use(cors());
+app.use(compression());
 
 const loggerOptions: expressWinston.LoggerOptions = {
   transports: [new winston.transports.Console()],
