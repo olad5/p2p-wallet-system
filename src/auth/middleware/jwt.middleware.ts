@@ -47,7 +47,8 @@ class JwtMiddleware {
         const authorization = req.headers["authorization"].split(" ");
         if (authorization[0] !== "Bearer") {
           return res.status(401).send({
-            error: "JWT error",
+            status: "failed",
+            error: "Unauthorized to access this route",
           });
         } else {
           res.locals.jwt = jwt.verify(authorization[1], jwtSecret) as Jwt;
@@ -62,7 +63,8 @@ class JwtMiddleware {
       }
     } else {
       return res.status(401).send({
-        error: "JWT error",
+        status: "failed",
+        error: "Unauthorized to access this route",
       });
     }
   }
