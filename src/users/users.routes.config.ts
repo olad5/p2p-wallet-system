@@ -26,8 +26,8 @@ export class UsersRoutes extends CommonRoutesConfig {
         body("password")
           .isLength({ min: 5 })
           .withMessage("Must include password (5+ characters)"),
-        body("firstName").isString().isLength({ min: 5 }),
-        body("lastName").isString().isLength({ min: 5 }),
+        body("firstName").isString().isLength({ min: 1 }),
+        body("lastName").isString().isLength({ min: 1 }),
         BodyValidationMiddleware.verifyBodyFieldsErrors,
         UsersMiddleware.validateSameEmailDoesntExist,
         UsersController.createUser
