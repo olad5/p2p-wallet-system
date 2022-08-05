@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
 
 const dotenvResult = dotenv.config();
-if (dotenvResult.error) {
+
+if (process.env.NODE_ENV === "development" && dotenvResult.error) {
   throw dotenvResult.error;
 }
 
@@ -48,16 +49,21 @@ const loggerOptions: expressWinston.LoggerOptions = {
     winston.format.colorize({ all: true })
   ),
 };
+
 if (!process.env.DEBUG) {
   loggerOptions.meta = false;
 }
+
 app.use(expressWinston.logger(loggerOptions));
 
 routes.push(new UsersRoutes(app));
 routes.push(new AuthRoutes(app));
 routes.push(new WalletRoutes(app));
 
-const runningMessage = `Server running at http://localhoost:${port}`;
+const runningMessage =
+  process.env.NODE_ENV === "development"
+    ? `Server running at http://localhost:${port}`
+    : { statusCode: 200, message: "Server running..." };
 
 app.get("/", (req: express.Request, res: express.Response) => {
   res.status(200).send(runningMessage);
