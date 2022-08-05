@@ -56,6 +56,7 @@ class JwtMiddleware {
       } catch (err) {
         log(err);
         return res.status(403).send({
+          status: "failed",
           error: "Unauthorized to access this route",
         });
       }
