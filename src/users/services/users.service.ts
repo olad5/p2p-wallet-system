@@ -1,10 +1,10 @@
 import { CRUD } from "../../common/interfaces/crud.interface";
-import { UserModel } from "../types/User.Model";
 import { CreateUserDto } from "../dtos/create.user.dto";
 import { PatchUserDto } from "../dtos/patch.user.dto";
 import UsersDao from "../daos/users.dao";
+import { User } from "@prisma/client";
 
-class UserService implements CRUD<UserModel, CreateUserDto, PatchUserDto> {
+class UserService implements CRUD<Partial<User>, CreateUserDto, PatchUserDto> {
   async list(limit: number) {
     const users = await UsersDao.getUsers(limit);
     return users;

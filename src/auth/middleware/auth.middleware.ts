@@ -7,7 +7,6 @@ const log = debug("app:auth-middleware");
 class AuthMiddleware {
   async verifyUserPassword(req: Request, res: Response, next: NextFunction) {
     const user = await UsersService.getUserByEmailWithPassword(req.body.email);
-    log("confirmed user password with email", user);
     if (user) {
       const passwordHash = user.password;
       if (await argon2.verify(passwordHash, req.body.password)) {

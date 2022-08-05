@@ -6,7 +6,7 @@ const log = debug("app:prisma-service");
 class PrismaService {
   private client = new PrismaClient();
   constructor() {
-    log("DataBase connected!!!!");
+    log("DataBase connected successfully!");
   }
 
   public getPrismaClient() {
