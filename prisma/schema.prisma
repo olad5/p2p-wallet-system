@@ -11,9 +11,9 @@ datasource db {
 model User {
   id              String   @id @default(uuid())
   email           String   @unique
-  password        String
-  firstName       String
-  lastName        String
+  password        String   @db.VarChar(250)
+  firstName       String   @db.VarChar(150)
+  lastName        String   @db.VarChar(150)
   wallet          Wallet?
   permissionFlags Int      @default(1)
   created_at      DateTime @default(now())
@@ -45,15 +45,16 @@ enum WalletTransactionType {
 model WalletTransaction {
   id                         String                  @id @default(uuid())
   amount                     Int
-  narration                  String
+  ref                        String                  @db.VarChar(100)
+  narration                  String?                 @db.VarChar(100)
   type                       WalletTransactionType
   status                     WalletTransactionStatus
   prev_credit_wallet_balance Int?
   new_credit_wallet_balance  Int?
   prev_debit_wallet_balance  Int?
   new_debit_wallet_balance   Int?
-  debit_wallet_id            String                  @unique
-  credit_wallet_id           String                  @unique
+  debit_wallet_id            String?
+  credit_wallet_id           String
   debit_wallet               Wallet?                 @relation("debit_wallet", fields: [debit_wallet_id], references: [id])
   credit_wallet              Wallet?                 @relation("credit_wallet", fields: [credit_wallet_id], references: [id])
   created_at                 DateTime                @default(now())
