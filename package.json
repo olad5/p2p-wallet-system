@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "start": "node ./dist/js/app.js",
     "dev": "ts-node-dev --rs --exit-child --respawn  ./src/app.ts",
     "debug": "export DEBUG=* && yarn run dev"
   },
