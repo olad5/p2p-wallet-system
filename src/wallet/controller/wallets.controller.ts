@@ -24,7 +24,7 @@ class WalletController {
     const { limit = 10 } = req.query;
     const transactions = await WalletsService.list(Number(limit));
     return res.status(200).send({
-      staus: "success",
+      status: "success",
       message: "Transactions Retreived",
       transactions,
     });
@@ -40,7 +40,7 @@ class WalletController {
       transaction = await WalletsService.readById(transactionId);
       if (!transaction) {
         return res.status(404).send({
-          staus: "failed",
+          status: "failed",
           errors: [`Transaction with id ${transactionId} does not exist`],
         });
       }
@@ -51,7 +51,7 @@ class WalletController {
       );
     }
     return res.status(200).send({
-      staus: "success",
+      status: "success",
       message: "Transaction Retrieved",
       transaction,
     });
@@ -62,7 +62,7 @@ class WalletController {
       res.locals.jwt.userId
     );
     return res.status(200).send({
-      staus: "success",
+      status: "success",
       message: "User Wallet Retrieved",
       wallet: userWallet,
     });
@@ -76,7 +76,7 @@ class WalletController {
 
     if (!paystack_response) {
       return res.status(500).send({
-        staus: "failed",
+        status: "failed",
         message: "error occured, could not initialize wallet funding",
       });
     }
@@ -96,7 +96,7 @@ class WalletController {
     const newTransaction = await WalletsService.create(newTransactionBody);
 
     return res.status(201).send({
-      staus: "success",
+      status: "success",
       message:
         "Initialized Wallet Funding, please check out paystack link to confirm",
       newTransaction,
@@ -141,7 +141,7 @@ class WalletController {
     }
 
     return res.status(201).send({
-      staus: "success",
+      status: "success",
       message: "Transfer Successful",
       newTransaction,
     });
@@ -156,7 +156,7 @@ class WalletController {
 
     if (!paystack_response || paystack_response.data.status !== "success") {
       return res.status(500).send({
-        staus: "failed",
+        status: "failed",
         errors: ["error occured funding the wallet"],
       });
     }
@@ -174,7 +174,7 @@ class WalletController {
     );
 
     return res.status(200).send({
-      staus: "success",
+      status: "success",
       message: "Wallet Funded",
       transaction: updatedTransaction,
     });

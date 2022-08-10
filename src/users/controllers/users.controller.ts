@@ -7,7 +7,7 @@ class UserController {
     const { limit = 10 } = req.query;
     const users = await UsersService.list(Number(limit));
     return res.status(200).send({
-      staus: "success",
+      status: "success",
       message: "Users Retreived",
       users,
     });
@@ -16,7 +16,7 @@ class UserController {
   async getUserById(req: Request, res: Response) {
     const user = await UsersService.readById(req.body.id);
     return res.status(200).send({
-      staus: "success",
+      status: "success",
       message: "User",
       user,
     });
@@ -25,7 +25,7 @@ class UserController {
     req.body.password = await argon2.hash(req.body.password);
     const userId = await UsersService.create(req.body);
     return res.status(200).send({
-      staus: "success",
+      status: "success",
       message: "User Account Created",
       userId,
     });
@@ -37,7 +37,7 @@ class UserController {
 
     const updatedUser = await UsersService.patchById(req.body.id, req.body);
     return res.status(200).send({
-      staus: "success",
+      status: "success",
       message: "User Account Updated ",
       user: updatedUser,
     });
