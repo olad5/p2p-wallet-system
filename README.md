@@ -1,4 +1,4 @@
-## P2P Wallet System
+## Peer-To-Peer Wallet System
 
 This Project funds User wallet balance and handles p2p wallet transfers.
 
@@ -37,6 +37,18 @@ $ yarn install
 ## Running the app
 
 ```bash
+# Running the app with Docker
+
+# development
+$ docker compose up
+
+```
+
+
+
+```bash
+## Running the app without Docker
+
 # development
 $ yarn run dev
 
